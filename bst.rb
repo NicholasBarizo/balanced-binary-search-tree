@@ -44,8 +44,23 @@ class Tree
     @root = Node.new(data, left_node, right_node)
   end
 
-  def insert
-    @root
+  def insert(value, node = @root)
+    if value > node.data
+      node.right_node = if node.right_node
+                          insert(value, node.right_node)
+                        else
+                          node.right_node = Node.new(value, nil, nil)
+                        end
+    elsif value < node.data
+      node.left_node = if node.left_node
+                         insert(value, node.left_node)
+                       else
+                         Node.new(value, nil, nil)
+                       end
+    else
+      puts 'ERROR: DUPLICATE IN ARRAY'
+    end
+    node
   end
 
   # Pretty print provided by The Odin Project
@@ -59,4 +74,9 @@ end
 test_tree = Tree.new([1, 9, 6, 8, 3, 4, 2, 1, 11])
 puts 'root:'
 p test_tree.root
+p test_tree.pretty_print
+test_tree.insert(20)
+test_tree.insert(7)
+test_tree.insert(11)
+test_tree.insert(5)
 p test_tree.pretty_print
