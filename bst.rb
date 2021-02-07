@@ -70,11 +70,17 @@ class Tree
         return nil
       elsif node.right_node.nil?
         return node.left_node
-      elsif right.left_node.nil?
+      elsif node.left_node.nil?
         return node.right_node
+      elsif node.right_node && node.left_node
+        new_data = node.right_node
+        new_data = new_data.left_node while new_data.left_node
+        node = delete(new_data.data, node)
+        node.data = new_data.data
+        return node
       end
-    end 
-    
+    end
+
     node.right_node = delete(value, node.right_node) unless node.right_node.nil?
     node.left_node = delete(value, node.left_node) unless node.left_node.nil?
     node
@@ -95,7 +101,7 @@ test_tree.pretty_print
 test_tree.insert(20)
 test_tree.insert(7)
 test_tree.pretty_print
-test_tree.delete(20)
+test_tree.delete(6)
 test_tree.pretty_print
-test_tree.delete(8)
+test_tree.delete(9)
 test_tree.pretty_print
