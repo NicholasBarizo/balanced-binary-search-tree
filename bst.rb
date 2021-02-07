@@ -63,6 +63,29 @@ class Tree
     node
   end
 
+  def delete(value, node = @root)
+    # NO CHILDREN
+    
+    if node.right_node && node.right_node.data == value
+      if node.right_node.right_node.nil? && node.right_node.left_node.nil?
+        node.right_node = nil
+      end
+    end 
+    if node.left_node && node.left_node.data == value
+      if node.left_node.left_node.nil? & node.left_node.right_node.nil?
+        node.left_node = nil  
+      end
+    end
+    node.right_node = delete(value, node.right_node) unless node.right_node.nil?
+    node.left_node = delete(value, node.left_node) unless node.left_node.nil?
+
+
+    # ONE CHILD
+
+    # TWO CHILDREN
+    node
+  end
+
   # Pretty print provided by The Odin Project
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -74,9 +97,13 @@ end
 test_tree = Tree.new([1, 9, 6, 8, 3, 4, 2, 1, 11])
 puts 'root:'
 p test_tree.root
-p test_tree.pretty_print
+test_tree.pretty_print
 test_tree.insert(20)
 test_tree.insert(7)
-test_tree.insert(11)
-test_tree.insert(5)
-p test_tree.pretty_print
+test_tree.pretty_print
+test_tree.delete(20)
+test_tree.delete(7)
+test_tree.delete(2)
+test_tree.delete(1)
+test_tree.delete(4)
+test_tree.pretty_print
