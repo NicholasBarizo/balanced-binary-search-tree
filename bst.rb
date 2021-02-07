@@ -64,27 +64,17 @@ class Tree
   end
 
   def delete(value, node = @root)
-    # NO CHILDREN
-    left = node.left_node
-    right = node.right_node
-    if right && right.data == value
-      if right.right_node.nil? && right.left_node.nil?
-        node.right_node = nil
-      elsif right.right_node.nil?
-        node.right_node = right.left_node
+
+    if node.data == value
+      if node.right_node.nil? && node.left_node.nil?
+        return nil
+      elsif node.right_node.nil?
+        return node.left_node
       elsif right.left_node.nil?
-        node.right_node = right.right_node
+        return node.right_node
       end
     end 
-    if left && left.data == value
-      if left.left_node.nil? & left.right_node.nil?
-        node.left_node = nil
-      elsif left.left_node.nil?
-        node.left_node = left.right_node 
-      elsif left.right_node.nil?
-        node.left_node = left.left_node
-      end
-    end
+    
     node.right_node = delete(value, node.right_node) unless node.right_node.nil?
     node.left_node = delete(value, node.left_node) unless node.left_node.nil?
     node
