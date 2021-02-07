@@ -65,24 +65,28 @@ class Tree
 
   def delete(value, node = @root)
     # NO CHILDREN
-    
-    if node.right_node && node.right_node.data == value
-      if node.right_node.right_node.nil? && node.right_node.left_node.nil?
+    left = node.left_node
+    right = node.right_node
+    if right && right.data == value
+      if right.right_node.nil? && right.left_node.nil?
         node.right_node = nil
+      elsif right.right_node.nil?
+        node.right_node = right.left_node
+      elsif right.left_node.nil?
+        node.right_node = right.right_node
       end
     end 
-    if node.left_node && node.left_node.data == value
-      if node.left_node.left_node.nil? & node.left_node.right_node.nil?
-        node.left_node = nil  
+    if left && left.data == value
+      if left.left_node.nil? & left.right_node.nil?
+        node.left_node = nil
+      elsif left.left_node.nil?
+        node.left_node = left.right_node 
+      elsif left.right_node.nil?
+        node.left_node = left.left_node
       end
     end
     node.right_node = delete(value, node.right_node) unless node.right_node.nil?
     node.left_node = delete(value, node.left_node) unless node.left_node.nil?
-
-
-    # ONE CHILD
-
-    # TWO CHILDREN
     node
   end
 
@@ -102,8 +106,6 @@ test_tree.insert(20)
 test_tree.insert(7)
 test_tree.pretty_print
 test_tree.delete(20)
-test_tree.delete(7)
-test_tree.delete(2)
-test_tree.delete(1)
-test_tree.delete(4)
+test_tree.pretty_print
+test_tree.delete(8)
 test_tree.pretty_print
