@@ -41,7 +41,7 @@ class Tree
     data = array[array.length / 2]
     left_node = build_tree(array.slice(0, array.length / 2), i + 1)
     right_node = build_tree(array.slice(array.length / 2 + 1, array.length), i + 1)
-    @root = Node.new(data, left_node, right_node)
+    Node.new(data, left_node, right_node)
   end
 
   def insert(value, node = @root)
@@ -86,6 +86,15 @@ class Tree
     node
   end
 
+  def find(value, node = @root)
+    left = find(value, node.left_node) if node.left_node
+    right = find(value, node.right_node) if node.right_node
+    return left if left && left.data == value
+    return right if right && right.data == value
+
+    node
+  end
+
   # Pretty print provided by The Odin Project
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -104,4 +113,6 @@ test_tree.pretty_print
 test_tree.delete(6)
 test_tree.pretty_print
 test_tree.delete(9)
+test_tree.pretty_print
+p test_tree.find(3)
 test_tree.pretty_print
