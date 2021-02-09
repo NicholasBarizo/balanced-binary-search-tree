@@ -100,6 +100,13 @@ class Tree
     array
   end
 
+  def preorder(array = [], node = @root)
+    array.push node.data
+    array = preorder(array, node.left_node) if node.left_node
+    array = preorder(array, node.right_node) if node.right_node
+    array
+  end
+
   def postorder(array = [], node = @root)
     array = postorder(array, node.left_node) if node.left_node
     array = postorder(array, node.right_node) if node.right_node
@@ -127,4 +134,5 @@ test_tree.delete(9)
 test_tree.pretty_print
 test_tree.pretty_print(test_tree.find(3))
 p test_tree.level_order
+p test_tree.preorder
 p test_tree.postorder
