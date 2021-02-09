@@ -100,6 +100,12 @@ class Tree
     array
   end
 
+  def postorder(array = [], node = @root)
+    array = postorder(array, node.left_node) if node.left_node
+    array = postorder(array, node.right_node) if node.right_node
+    array.push(node.data)
+  end
+
   # Pretty print provided by The Odin Project
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -121,3 +127,4 @@ test_tree.delete(9)
 test_tree.pretty_print
 test_tree.pretty_print(test_tree.find(3))
 p test_tree.level_order
+p test_tree.postorder
