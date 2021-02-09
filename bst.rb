@@ -107,6 +107,13 @@ class Tree
     array
   end
 
+  def inorder(array = [], node = @root)
+    array = inorder(array, node.left_node) if node.left_node
+    array.push node.data
+    array = inorder(array, node.right_node) if node.right_node
+    array
+  end
+
   def postorder(array = [], node = @root)
     array = postorder(array, node.left_node) if node.left_node
     array = postorder(array, node.right_node) if node.right_node
@@ -135,4 +142,5 @@ test_tree.pretty_print
 test_tree.pretty_print(test_tree.find(3))
 p test_tree.level_order
 p test_tree.preorder
+p test_tree.inorder
 p test_tree.postorder
