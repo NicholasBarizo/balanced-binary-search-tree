@@ -64,21 +64,16 @@ class Tree
   end
 
   def delete(value, node = @root)
-
     if node.data == value
-      if node.right_node.nil? && node.left_node.nil?
-        return nil
-      elsif node.right_node.nil?
-        return node.left_node
-      elsif node.left_node.nil?
-        return node.right_node
-      elsif node.right_node && node.left_node
-        new_data = node.right_node
-        new_data = new_data.left_node while new_data.left_node
-        node = delete(new_data.data, node)
-        node.data = new_data.data
-        return node
-      end
+      return nil if node.right_node.nil? && node.left_node.nil?
+      return node.left_node if node.right_node.nil?
+      return node.right_node if node.left_node.nil?
+
+      new_data = node.right_node
+      new_data = new_data.left_node while new_data.left_node
+      node = delete(new_data.data, node)
+      node.data = new_data.data
+      return node
     end
 
     node.right_node = delete(value, node.right_node) unless node.right_node.nil?
@@ -93,6 +88,16 @@ class Tree
     return right if right && right.data == value
 
     node
+  end
+
+  def level_order(array = [], queue = [@root])
+    until queue.empty?
+      queue.push queue[0].left_node if queue[0].left_node
+      queue.push queue[0].right_node if queue[0].right_node
+      array.push queue[0].data
+      queue.shift
+    end
+    array
   end
 
   # Pretty print provided by The Odin Project
@@ -114,5 +119,5 @@ test_tree.delete(6)
 test_tree.pretty_print
 test_tree.delete(9)
 test_tree.pretty_print
-p test_tree.find(3)
-test_tree.pretty_print
+test_tree.pretty_print(test_tree.find(3))
+p test_tree.level_order
