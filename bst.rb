@@ -120,6 +120,14 @@ class Tree
     array.push(node.data)
   end
 
+  def height(node = @root, depth = 0)
+    left = node.left_node ? height(node.left_node, depth + 1) : 0 
+    right = node.right_node ? height(node.right_node, depth + 1) : 0
+    puts "data: #{node.data} depth: #{depth}"
+    return depth unless node.left_node || node.right_node
+    return left > right ? left : right
+  end
+
   # Pretty print provided by The Odin Project
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -144,3 +152,4 @@ p test_tree.level_order
 p test_tree.preorder
 p test_tree.inorder
 p test_tree.postorder
+p test_tree.height
