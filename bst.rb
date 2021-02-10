@@ -128,6 +128,10 @@ class Tree
     return left > right ? left : right
   end
 
+  def rebalance()
+    @root = build_tree(level_order)
+  end
+
   # Pretty print provided by The Odin Project
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -153,3 +157,11 @@ p test_tree.preorder
 p test_tree.inorder
 p test_tree.postorder
 p test_tree.height
+test_tree.insert(21)
+test_tree.insert(22)
+test_tree.insert(23)
+test_tree.insert(5)
+test_tree.insert(6)
+test_tree.pretty_print
+test_tree.rebalance
+test_tree.pretty_print
