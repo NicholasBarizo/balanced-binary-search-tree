@@ -167,7 +167,10 @@ class Tree
 end
 
 def script()
+  puts "\nGenerating new array"
   array = Array.new(15) { rand(1..100) }
+  p array
+  puts "\nCreating new tree"
   tree = Tree.new(array)
   tree.pretty_print
   p "Level Order: #{tree.level_order}"
@@ -206,32 +209,20 @@ test_tree = Tree.new([1, 9, 6, 8, 3, 4, 2, 1, 11])
 puts 'root:'
 p test_tree.root
 test_tree.pretty_print
+puts "\ninsert 20"
 test_tree.insert(20)
-test_tree.insert(7)
 test_tree.pretty_print
+puts "\ndelete 6"
 test_tree.delete(6)
 test_tree.pretty_print
-test_tree.delete(9)
-test_tree.pretty_print
+puts "\nfind 3"
 test_tree.pretty_print(test_tree.find(3))
-p test_tree.level_order
-p test_tree.preorder
-p test_tree.inorder
-p test_tree.postorder
-p test_tree.height
-test_tree.insert(21)
-test_tree.insert(22)
-test_tree.insert(23)
-test_tree.insert(5)
-test_tree.insert(6)
-test_tree.pretty_print
+puts "\nbalanced?"
 p test_tree.balanced?
 test_tree.rebalance
+puts "\nrebalance"
 test_tree.pretty_print
-p test_tree.balanced?
-p test_tree.depth(test_tree.root)
-p test_tree.depth(test_tree.root.right_node)
+puts "\ndepth of root.right_node.left_node"
 p test_tree.depth(test_tree.root.right_node.left_node)
-p test_tree.depth(test_tree.root.right_node.left_node.right_node)
-p test_tree.depth(test_tree.root.right_node.left_node.right_node.right_node)
+
 script
