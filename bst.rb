@@ -123,27 +123,19 @@ class Tree
   def height(node = @root, depth = 0)
     left = node.left_node ? height(node.left_node, depth + 1) : 0
     right = node.right_node ? height(node.right_node, depth + 1) : 0
-    puts "data: #{node.data} depth: #{depth}"
+    # puts "data: #{node.data} depth: #{depth}"
     return depth unless node.left_node || node.right_node
 
     left > right ? left : right
   end
 
   def balanced?(node = @root)
-    if node.left_node.nil?
-      return true if node.right_node.nil?
-      return true unless height(node.right_node) > 1
+    left = node.left_node ? height(node.left_node) : 0
+    right = node.right_node ? height(node.right_node) : 0
 
-      return false
-    end
-    if node.right_node.nil?
-      return true unless height(node.left_node) > 1
-
-      return false
-    end
-    return false if balanced?(node.left_node) == false
-    return false if balanced?(node.right_node) == false
-    # return false if (height(node.left_node) - height(node.right_node)).abs > 1
+    return false if (left - right).abs > 1
+    return false if node.left_node && balanced?(node.left_node) == false
+    return false if node.right_node && balanced?(node.right_node) == false
 
     true
   end
