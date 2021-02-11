@@ -166,6 +166,42 @@ class Tree
   end
 end
 
+def script()
+  array = Array.new(15) { rand(1..100) }
+  tree = Tree.new(array)
+  tree.pretty_print
+  p "Level Order: #{tree.level_order}"
+  p "Preorder: #{tree.preorder}"
+  p "Inorder: #{tree.inorder}"
+  p "Postorder: #{tree.postorder}"
+
+  puts 'Inserting 4 random numbers from 100 to 1000'
+  4.times do
+    num = rand(100..1000)
+    puts "Inserting #{num}"
+    tree.insert(num)
+  end
+  tree.pretty_print
+  until tree.balanced?
+    if tree.balanced?
+      tree.pretty_print
+      puts 'Tree is balanced'
+    else
+      puts 'Tree is unbalanced'
+      puts 'rebalancing...'
+      tree.rebalance
+      if tree.balanced?
+        tree.pretty_print
+        puts 'Tree is balanced'
+      end
+    end
+  end
+  p "Level Order: #{tree.level_order}"
+  p "Preorder: #{tree.preorder}"
+  p "Inorder: #{tree.inorder}"
+  p "Postorder: #{tree.postorder}"
+end
+
 test_tree = Tree.new([1, 9, 6, 8, 3, 4, 2, 1, 11])
 puts 'root:'
 p test_tree.root
@@ -198,3 +234,4 @@ p test_tree.depth(test_tree.root.right_node)
 p test_tree.depth(test_tree.root.right_node.left_node)
 p test_tree.depth(test_tree.root.right_node.left_node.right_node)
 p test_tree.depth(test_tree.root.right_node.left_node.right_node.right_node)
+script
