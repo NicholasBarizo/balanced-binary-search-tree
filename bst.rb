@@ -129,6 +129,20 @@ class Tree
     left > right ? left : right
   end
 
+  def depth(node, root = @root, dpth = 0)
+    return dpth if root == node
+
+    if root.left_node
+      left = depth(node, root.left_node, dpth + 1)
+      return left if left.is_a?(Integer)
+    end
+    if root.right_node
+      right = depth(node, root.right_node, dpth + 1)
+      return right if right.is_a?(Integer)
+    end
+    nil
+  end
+
   def balanced?(node = @root)
     left = node.left_node ? height(node.left_node) : 0
     right = node.right_node ? height(node.right_node) : 0
@@ -179,3 +193,8 @@ p test_tree.balanced?
 test_tree.rebalance
 test_tree.pretty_print
 p test_tree.balanced?
+p test_tree.depth(test_tree.root)
+p test_tree.depth(test_tree.root.right_node)
+p test_tree.depth(test_tree.root.right_node.left_node)
+p test_tree.depth(test_tree.root.right_node.left_node.right_node)
+p test_tree.depth(test_tree.root.right_node.left_node.right_node.right_node)
